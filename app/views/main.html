@@ -1,0 +1,43 @@
+
+<div class="row marketing">
+    <div>
+        <h4>Liste des évenements</h4>
+        <div ng-repeat="obj in listeEvt track by $id(obj)">
+            {{obj.titre}}
+        </div>
+        
+        
+  
+ 
+  <!-- <button value="sdfqsdqf" ui-sref="position">rgergrtgeert</button> 
+  <table class="table table-bordered" ng-repeat="module in listeEvt">
+    <tr>
+        <td>
+            <h3>{{ module.title }}</h3>
+            <h4>Description</h4>
+            <p>{{ module.description }}</p>
+        </td>
+    </tr>
+    <tr ng-repeat="crenau in module.listeCreneaux">
+        <td>
+            {{ crenau.title }}
+        </td>
+    </tr> 
+</table> -->
+    </div> 
+    
+<div class="row marketing">
+  <h4>Création d'évenement</h4>
+<input type="text" ng-model="titre"/><br/>
+<input type="text" ng-model="description"/><br/>
+<input type="button" ng-click="creerEvt()" value="Enregistrer"/>
+</div>
+  <div class="row marketing">
+  <h4>Suppression d'évenement</h4>
+<input type="number" ng-model="id"/><br/>
+<input type="button" ng-click="supprimerEvt()" value="Enregistrer"/>
+</div>
+ 
+  <h2>{{test}}</h2>
+  
+</div>
