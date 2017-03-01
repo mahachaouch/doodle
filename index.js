@@ -22,9 +22,18 @@ app.get('/evt/:id', function (req, res) {
     res.json(doodle.supprimerEvenement(req.params.id));
 });
 
+app.get('/oui/:id/date/:date/heure/:heure', function (req, res){
+    res.json(doodle.repondreCreneauEvenementOui(req.params.id,req.params.date,req.params.heure));
+})
+
+app.get('/non/:id/date/:date/heure/:heure', function (req, res){
+    res.json(doodle.repondreCreneauEvenementNon(req.params.id,req.params.date,req.params.heure));
+})
+
+app.get('/evt', function(req, res){
+    res.json(doodle.afficherEvt());
+})
+
 app.listen(8080,function(){
 console.log('i hear you');
 });
-
-
-
