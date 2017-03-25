@@ -1,15 +1,15 @@
 var listeEvt = [];
 var listeProfil = [];
 var compteurId = 0;
-var auth = '';
+var auth = null;
 
 // Constructeur pour les Evenements
 function Evenement(titre,description) {
   // le titre de l'evt
 	this.id = compteurId++;
-  	this.titre = titre;
+  this.titre = titre;
 	this.description = description;
-    this.propriétaire = auth;
+  this.propriétaire = auth;
 	this.listeCreneaux = [];
   // pour ajouter creneau à l'evenement
   this.ajouterCreneau = function(Creneau) {
@@ -27,20 +27,42 @@ function Evenement(titre,description) {
 
 // Constructeur pour les Creneaux
 function Creneau(date,heure) {
+	this.listeReponses = [];
+
 	// date du creneau
 	this.date = date;
 	//heure du creneau
 	this.heure = heure;
-	//reponse du creneau
-	this.rep = 'false';
+
 
 	this.repondreCreneauOui = function(){
-		this.rep = 'true';
+		var rTemp = rechercheReponseCreneau(auth,this.listeReponses);
+		if(rTemp == null){
+			rTemp = new Reponse(true);
+			this.listeReponses.push(rTemp);
+		}else{
+			rTemp.dispo = true;
+		}
+
 	}
 
 	this.repondreCreneauNon = function(){
-		this.rep = 'false';
+		var rTemp = rechercheReponseCreneau(auth,this.listeReponses);
+		if(rTemp == null){
+			rTemp = new Reponse(false);
+			this.listeReponses.push(rTemp);
+		}else{
+			rTemp.dispo = false;
+		}
 	}
+}
+
+//Constructeur pour les reponses
+function Reponse(dispo){
+	//login de l'utilisateur qui répond
+	this.login = auth;
+	//disponibilité au créaneau
+	this.dispo = dispo;
 }
 
 //Version 2//
@@ -49,26 +71,46 @@ function Profil(login,nom,prenom){
 		this.login = login;
 		this.nom = nom;
 		this.prenom = prenom;
+		this.connecte = false;
 }
 
 var creerProfil = function(login, nom, prenom) {
-	var pTemp = new Profil(login, nom, prenom);	
+	//vérifier que le login n'existe pas
+	var pTemp = new Profil(login, nom, prenom);
 	listeProfil.push(pTemp);
 	return listeProfil;
 }
 
 var connexion = function (login) {
-    var pTemp = rechercheProfil(login);
+	for (i=0; i<listeProfil.length;i++){
+		if (listeProfil[i].login == login){
+			listeProfil[i].connecte = true;
+			auth = login;
+			pTemp = listeProfil[i];
+		}else {
+			listeProfil[i].connecte = false;
+		}
+	}
     return pTemp;
 }
-	
+
+var isConnected = function(login){
+	var pTemp = rechercheProfil(login);
+	return pTemp.connecte;
+}
+
+var logOut = function(){
+	var pTemp = rechercheProfil(auth);
+	pTemp.connecte = false;
+	auth = null;
+}
 //Version 2//
 
 
 
 // créer un nouveau evenement
 var creerEvenement = function(titre, description) {
-	var eTemp = new Evenement(titre, description);	
+	var eTemp = new Evenement(titre, description);
 	listeEvt.push(eTemp);
 	return listeEvt;
 }
@@ -102,7 +144,7 @@ var repondreCreneauEvenementOui = function (id,date,heure) {
 				evt.listeCreneaux[i].repondreCreneauOui();
 			}
 		}
-	return evt.listeCreneaux;
+	return evt.listeCreneaux.listeReponses;
 }
 
 var repondreCreneauEvenementNon = function (id,date,heure) {
@@ -112,12 +154,16 @@ var repondreCreneauEvenementNon = function (id,date,heure) {
 				evt.listeCreneaux[i].repondreCreneauNon();
 			}
 		}
-	return evt.listeCreneaux;
+	return evt.listeCreneaux.listeReponses;
 }
 
+//affiche la totalité des évènements
 var afficherEvt = function(){
 	return listeEvt;
 }
+
+
+
 
 //fonction pour rechercher un événement dans la liste
 var rechercheEvt = function(id){
@@ -136,6 +182,14 @@ var rechercheProfil = function(login){
 	}
 }
 
+var rechercheReponseCreneau = function(login,listeR){
+	for(i=0; i<listeR.length;i++){
+		if(listeR[i].login == login){
+			return listeR[i];
+		}
+	}
+}
+
 // les 2 fonctions exportées
 exports.creerEvenement = creerEvenement;
 exports.ajouterCreneauEvenement = ajouterCreneauEvenement;
@@ -146,3 +200,6 @@ exports.repondreCreneauEvenementOui = repondreCreneauEvenementOui;
 exports.afficherEvt = afficherEvt;
 exports.creerProfil = creerProfil;
 exports.connexion = connexion;
+exports.isConnected = isConnected;
+exports.rechercheProfil = rechercheProfil;
+exports.logOut = logOut;
