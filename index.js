@@ -24,15 +24,42 @@ app.get('/evt/:id', function (req, res) {
 
 app.get('/oui/:id/date/:date/heure/:heure', function (req, res){
     res.json(doodle.repondreCreneauEvenementOui(req.params.id,req.params.date,req.params.heure));
-})
+});
 
 app.get('/non/:id/date/:date/heure/:heure', function (req, res){
     res.json(doodle.repondreCreneauEvenementNon(req.params.id,req.params.date,req.params.heure));
-})
+});
 
 app.get('/evt', function(req, res){
+    if (doodle.auth == null) {
+        res.json();
+    }
+    else {
+        res.json(doodle.afficherEvt());
+    }    
+});
+
+app.post('/profil/:login/nom/:nom/prenom/:prenom', function(req, res){
+    res.json(doodle.creerProfil(req.params.login, req.params.nom, req.params.prenom));
+});
+
+app.get('/auth/:login',function(req, res) {
+    if (doodle.connexion(req.params.login) != null) {
+        doodle.auth = req.params.login;
+        res.json(doodle.afficherEvt());
+        console.log('connecté en tant que '+ doodle.auth);
+    }
+    else {
+        console.log('erreur connexion, login incconu');
+        res.json(doodle.afficherEvt());
+    }
+});
+
+app.get('/auth',function(req, res) {
+    doodle.auth = null;
+    console.log('vous avez été deconnecté');
     res.json(doodle.afficherEvt());
-})
+});
 
 app.listen(8080,function(){
 console.log('i hear you');
