@@ -189,7 +189,15 @@ var afficherEvt = function(){
 	return listeEvt;
 }
 
-
+var getMyEvts = function(login) {
+    var listeMyEvt = [];
+    for (i=0; i<listeEvt.length;i++){
+		if (listeEvt[i].propriétaire == login){
+			listeMyEvt.push(listeEvt[i]);
+		}
+	}
+    return listeMyEvt;
+}
 
 
 //fonction pour rechercher un événement dans la liste
@@ -234,3 +242,4 @@ exports.rechercheEvt = rechercheEvt;
 exports.logOut = logOut;
 exports.cloturerEvenement = cloturerEvenement;
 exports.rechercheCreneau = rechercheCreneau;
+exports.getMyEvts = getMyEvts;

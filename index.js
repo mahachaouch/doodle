@@ -49,6 +49,10 @@ app.get('/evt', function(req, res){
     }
 });
 
+app.get('/myevt/login/:login', function (req, res) {
+    res.json(doodle.getMyEvts(req.params.login));
+});
+
 app.post('/profil/:login/nom/:nom/prenom/:prenom', function(req, res){
     res.json(doodle.creerProfil(req.params.login, req.params.nom, req.params.prenom));
 });
