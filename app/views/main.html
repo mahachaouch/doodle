@@ -13,17 +13,31 @@
 <div class="right">
     <ul>
         <li><a ng-click="seConnecter()"/>Se connecter</a></li>
-        <li><a ui-sref="creerCompte"/>Créer un compte</a></li>
+         <li><a ng-click="creer()"/>Créer un profil</a></li>
+       <!-- <li><a ui-sref="creerProfil"/>Créer un compte</a></li> -->
+       
     </ul>
 </div>
 
+    
+        <div ng-if="open">
+            Login: <input type="text"  ng-model="login"><br/>
+            Nom: <input type="text" ng-model="nom"><br/>
+            Prenom: <input type="text"ng-model="prenom"><br/>
+              <button ng-click="creerProfil()" />Valider<br/>
+        </div>  
+    
+    
+    
+    
 <div ng-if="identification">
     <input type="text" value="Login" ng-model="login"><br/>
     <input type="text" value="Nom" ng-model="nom"><br/>
-    <button ng-click="connexion()"/>Connexion
+    <button ng-click="connexion(login)"/>Connexion
 </div>
-
-<div class="row marketing">
+    <div ng-if="!isConnected"><h2>Il faut se connecter pour accéder à la liste des evenements</h2></div>
+<div ng-if="isConnected" class="row marketing">
+   
     <div>
         <h4>Liste des évenements</h4>
 
@@ -65,13 +79,13 @@
   <h4>Création d'évenement</h4>
 <input type="text" ng-model="titre"/><br/>
 <input type="text" ng-model="description"/><br/>
-<input type="button" ng-click="creerEvt()" value="Enregistrer"/>
+<input type="button" ng-click="creerEvt(titre,description)" value="Enregistrer"/>
 </div>
     
   <div class="row marketing">
   <h4>Suppression d'évenement</h4>
-<input type="number" ng-model="id"/><br/>
-<input type="button" ng-click="supprimerEvt()" value="Enregistrer"/>
+<input type="number" ng-model="idtoDelete"/><br/>
+<button ng-click="supprimerEvt(idtoDelete)" value="Supprimer"/>Supprimer
 </div>
     
   <div class="row marketing">
@@ -79,7 +93,7 @@
   <input type="number" ng-model="idEvtCreanAdd"/><br/>
   <input type="text" ng-model="date"/><br/>
 <input type="text" ng-model="heure"/><br/>
-<input type="button" ng-click="creerCrenau()" value="Enregistrer"/>
+<button  ng-click="creerCrenau(idEvtCreanAdd,date,heure)" />Enregistrer
 </div>
   
 </div>

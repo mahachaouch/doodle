@@ -15,8 +15,9 @@ angular.module('doodleApp')
       'Karma'
     ];
  
-    $scope.listeEvt ;
+    $rootScope.listeEvt ;
     $scope.id;
+    $rootScope.myEvts;
     $scope.login;
     $scope.idEvtCreanAdd;
     $scope.date;
@@ -27,13 +28,40 @@ angular.module('doodleApp')
     $scope.afficherCreanux=false;
     //l id de l evt choisi pour voir ses crénaux
     $scope.idEvtCreneauAffich=-1;
+    $scope.open=false;
+    
+    $scope.creer=function(){
+        $scope.open=true;
+    };
     
     $rootScope.isConnected=false;
     $scope.identification=false;
     $scope.seConnecter=function(){
          $scope.identification=true;
-    }
+    };
+      
+    $rootScope.login;
+    $rootScope.nom;
+    $rootScope.prenom;
     
+        $scope.creerProfil=function(){
+           $http({method: 'POST', url: '/profil/'+$scope.login+'/nom/'+$scope.nom+'/prenom/'+$scope.prenom}).then(function successCallback(response) {
+     // code si réussite
+    
+      $scope.open=false;
+      console.log(response.data);
+     });
+    };
+
+    $scope.getEvts=function(){
+  
+           $http({method: 'GET', url: '/evt'}).then(function successCallback(response) {
+     // code si réussite
+      $rootScope.listeEvt=response.data;
+      
+      console.log(response.data);
+     });
+    };
     
     $scope.afficherCrean=function(creaux){
         console.log(creaux);
@@ -41,12 +69,20 @@ angular.module('doodleApp')
         $scope.CreauxAaffich= creaux;
     };
     
-    $scope.connexion=function(){
-           $http({method: 'GET', url: '/auth/'+$scope.login}).then(function successCallback(response) {
+    $scope.connexion=function(login){
+           $http({method: 'GET', url: '/auth/'+login}).then(function successCallback(response) {
      // code si réussite
-      $scope.evtResponse=response.data;
+     $scope.utilisateur=response.data;
       console.log(response.data);
       $scope.identification=false;
+      $rootScope.isConnected=true;
+      
+      //set utilisateur
+        $rootScope.login=$scope.utilisateur.login;
+       $rootScope.nom= $scope.utilisateur.nom; 
+       $rootScope.prenom=$scope.utilisateur.prenom;
+      // $scope.getMyEvt($scope.utilisateur.login);
+      $scope.getEvts();
      });
     };
     
@@ -75,35 +111,53 @@ angular.module('doodleApp')
 	description:""
     };
     
-  
-
-$scope.creerEvt= function(){
-    //création d event
-    $http({method: 'POST', url: '/evt/'+$scope.titre+'/description/'+$scope.description}).then(function successCallback(response) {
+  $rootScope.getMyEvt=function(login){
+      
+      $http({method: 'GET', url:'/myevt/login/'+login }).then(function successCallback(response) {
      // code si réussite
-      $scope.listeEvt=response.data;
+      $rootScope.myEvts=response.data;
+     
+      console.log(response.data);
+     });
+     
+  };
+
+$scope.creerEvt= function(titre,desc){
+    //création d event
+    $http({method: 'POST', url: '/evt/'+titre+'/description/'+desc}).then(function successCallback(response) {
+     // code si réussite
+      $rootScope.listeEvt=response.data;
       console.log(response.data);
      });
      
 };  
- $scope.supprimerEvt=function(){
-     $http({method: 'GET', url: '/evt/'+$scope.id}).then(function successCallback(response) {
+ $scope.supprimerEvt=function(id){
+
+     $http({method: 'GET', url: '/evt/'+id}).then(function successCallback(response) {
      // code si réussite
-      $scope.listeEvt=response.data;
+      $rootScope.listeEvt=response.data;
+     
       console.log(response.data);
      });
      
      
  };
-    
+   
+//      $scope.isConnected=function(){
+//                $http({method: 'GET', url: '/connected/'+$scope.login}).then(function successCallback(response) {
+//     
+//      console.log(response.data);
+//     });
+//         
+//      };
 
 
     
-   $scope.creerCrenau=function(){
-       $http({method: 'POST', url: '/id/'+$scope.idEvtCreanAdd+'/date/'+$scope.date+'/heure/'+$scope.heure}).then(function successCallback(response) {
+   $scope.creerCrenau=function(idEvtCreanAdd,date,heure){
+       $http({method: 'POST', url: '/id/'+idEvtCreanAdd+'/date/'+date+'/heure/'+heure}).then(function successCallback(response) {
      // code si réussite
       $scope.crenau=response.data;
-      console.log($scope.listeEvt);
+      console.log($rootScope.listeEvt);
      });
    };
     

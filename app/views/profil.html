@@ -1,4 +1,15 @@
-<div>
-    <p>Compte numero {{id}}</p>
-    <pre>{{pos | json}}</pre>
+<div ng-app="profil">
+   {{myEvts}}
+    <div ng-if="isConnected">
+        <p>Infos </p>
+        
+        {{listeEvt}}
+       Mon login: {{login}}
+       Nom :{{nom}}
+       Prenom: {{prenom}}
+    </div>
+    <div ng-if="!isConnected">
+        <h2>Vous devez vous connecter pour pouvoir consulter votre profil</h2>
+    </div>
+    
 </div>

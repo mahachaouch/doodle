@@ -22,6 +22,7 @@ angular.module('doodleApp')
     $scope.nom;
     $scope.prenom;
     $scope.creerProfil=function(){
+        console.log('ici');
            $http({method: 'POST', url: '/profil/'+$scope.login+'/nom/'+$scope.nom+'/prenom/'+$scope.prenom}).then(function successCallback(response) {
      // code si réussite
       $scope.evtResponse=response.data;
