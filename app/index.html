@@ -16,32 +16,45 @@
     <script src="/bower_components/angular-ui-router/release/angular-ui-router.js"></script>
 
     <script src="scripts/app.js"></script>
-    <script src="scripts/controllers/main.js"></script>
+       <script src="scripts/controllers/main.js"></script> 
+        <script src="scripts/controllers/connexion.js"></script> 
 
   </head>
   <body ng-app="doodleApp">
 
     <!-- Add your site or application content here -->
-    <div class="container">
-        <header class="row jumbotron">
-            <h1>DOODLE APP !</h1>
-            <p> This is a simple doodle application, it allows you to manage events to share with your friends or colleagues</p>
-            <p><a class="btn btn-primary btn-lg" href="http://doodle.com/fr/" role="button">Plus <span class="glyphicon glyphicon-chevron-down"></span></a>
-            </p>
-        </header>
+    <div class="header">
+      <div class="navbar navbar-default" role="navigation">
+        <div class="container">
+          <div class="navbar-header">
+            <a class="navbar-brand" href="#/">doodle</a>
+          </div>
 
-        <div class="row">
-            <a ui-sref="lol">Vue profil</a>
+          <div class="collapse">
+            <ul class="nav navbar-nav">
+              
+              <li><a ui-sref="position">Position</a></li>
+              <li><a ui-sref="main">main</a></li>
+            </ul>
+          </div>
         </div>
-        <hr>
-        <div class="row">
-            <a ui-sref="main">Gestion des evenements</a>
-            <ui-view name=""></ui-view>
-        </div>
-
-        <footer class="row">
-            <p>DoodleApp <span class="glyphicon glyphicon-copyright-mark"></span> - L3 MIAGE</p>
-        </footer>
+      </div>
     </div>
+
+    <div class="container">
+        
+      
+              <li><a ui-sref="profil">Profil</a></li>
+            <!--  <li><a ui-sref="saisirposition">saisirposition</a></li> -->
+              <li><a ui-sref="main">Evenements</a></li>
+      <ui-view name=""></ui-view>
+    </div>
+
+    <div class="footer">
+      <div class="container">
+       
+      </div>
+    </div>
+
 </body>
 </html>
