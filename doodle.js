@@ -36,25 +36,32 @@ function Creneau(date,heure) {
 
 
 	this.repondreCreneauOui = function(){
-		var rTemp = rechercheReponseCreneau(auth,this.listeReponses);
+		var rTemp = null;
+		for(i=0; i<this.listeReponses.length;i++){
+			if(this.listeReponses[i].login == auth){
+				rTemp = this.listeReponses[i];
+			}
+		}
 		if(rTemp == null){
-			rTemp = new Reponse(true);
-			this.listeReponses.push(rTemp);
+			this.listeReponses.push(new Reponse(true));
 		}else{
 			rTemp.dispo = true;
 		}
-
 	}
 
 	this.repondreCreneauNon = function(){
-		var rTemp = rechercheReponseCreneau(auth,this.listeReponses);
+		var rTemp = null;
+		for(i=0; i<this.listeReponses.length;i++){
+			if(this.listeReponses[i].login == auth){
+				rTemp = this.listeReponses[i];
+			}
+		}
 		if(rTemp == null){
-			rTemp = new Reponse(false);
-			this.listeReponses.push(rTemp);
+			this.listeReponses.push(new Reponse(false));
 		}else{
 			rTemp.dispo = false;
 		}
-	}
+}
 }
 
 //Constructeur pour les reponses
@@ -183,11 +190,7 @@ var rechercheProfil = function(login){
 }
 
 var rechercheReponseCreneau = function(login,listeR){
-	for(i=0; i<listeR.length;i++){
-		if(listeR[i].login == login){
-			return listeR[i];
-		}
-	}
+
 }
 
 // les 2 fonctions exportées
@@ -202,4 +205,5 @@ exports.creerProfil = creerProfil;
 exports.connexion = connexion;
 exports.isConnected = isConnected;
 exports.rechercheProfil = rechercheProfil;
+exports.rechercheEvt = rechercheEvt;
 exports.logOut = logOut;
