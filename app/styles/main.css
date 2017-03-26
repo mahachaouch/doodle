@@ -9,6 +9,11 @@ body {
   padding: 0;
 }
 
+table.evt {
+    border-collapse: separate;
+    border-spacing: 10px;
+}
+
 /* Everything but the jumbotron gets side spacing for mobile first views */
 .header,
 .marketing,

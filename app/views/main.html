@@ -1,14 +1,11 @@
 
 <div class="row marketing">
-    <div>
         <h4>Liste des évenements</h4>
         <div ng-repeat="obj in listeEvt track by $id(obj)">
-            {{obj.titre}}
-        </div>
-        
-        
-  
- 
+            <div class="col-md-2 col-xs-4">{{obj.id}}</div>
+            <div class="col-md-4 col-xs-8">{{obj.titre}}</div>
+            <div class="col-md-6 col-xs-12">{{obj.description}}</div>
+        </div>  
   <!-- <button value="sdfqsdqf" ui-sref="position">rgergrtgeert</button> 
   <table class="table table-bordered" ng-repeat="module in listeEvt">
     <tr>
@@ -25,19 +22,31 @@
     </tr> 
 </table> -->
     </div> 
-    
 <div class="row marketing">
   <h4>Création d'évenement</h4>
-<input type="text" ng-model="titre"/><br/>
-<input type="text" ng-model="description"/><br/>
-<input type="button" ng-click="creerEvt()" value="Enregistrer"/>
+    <div class="input-group">
+        <span class="input-group-addon">Titre</span>
+        <input type="text" class="form-control" placeholder="Titre" ng-model="titre"/>
+    </div>
+    <br>
+    <div class="input-group">
+        <span class="input-group-addon">Description</span>
+        <input type="text" class="form-control" placeholder="Description" ng-model="description"/>
+    </div>
+    <br>
+    <div class="input-group">
+        <input type="button" class="btn btn-primary" ng-click="creerEvt()" value="Enregistrer"/>
+    </div>
 </div>
-  <div class="row marketing">
-  <h4>Suppression d'évenement</h4>
-<input type="number" ng-model="id"/><br/>
-<input type="button" ng-click="supprimerEvt()" value="Enregistrer"/>
-</div>
- 
-  <h2>{{test}}</h2>
+<div class="row marketing">
+    <h4>Suppression d'évenement</h4>
+    <div class="input-group">
+        <span class="input-group-addon">Id</span>
+        <input type="number" class="form-control" ng-model="id"/>
+    </div>
+    <br>
+    <div class="input-group">
+        <input type="button" class="btn btn-primary" ng-click="supprimerEvt()" value="Supprimer"/>
+    </div>
   
 </div>
