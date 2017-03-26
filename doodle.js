@@ -11,6 +11,8 @@ function Evenement(titre,description) {
 	this.description = description;
   this.propriétaire = auth;
 	this.listeCreneaux = [];
+	this.creneauFinal = null;
+
   // pour ajouter creneau à l'evenement
   this.ajouterCreneau = function(Creneau) {
   	this.listeCreneaux.push(Creneau);
@@ -23,7 +25,27 @@ function Evenement(titre,description) {
 			}
 		}
   }
+
+	this.cloturerEvt = function(){
+		var creneauMax = this.listeCreneaux[0];
+		var nbMax = 0;
+		for(i=0; i<this.listeCreneaux.length;i++){
+			var nb = 0;
+			var repListe = this.listeCreneaux[i].listeReponses;
+			for(j=0; j<repListe.length;j++){
+				if(repListe[j].dispo == true){
+					nb++;
+				}
+			}
+			if (nb>nbMax) {
+				nbMax = nb;
+				creneauMax = this.listeCreneaux[i];
+			}
+		}
+		this.creneauFinal=creneauMax;
+	}
 }
+
 
 // Constructeur pour les Creneaux
 function Creneau(date,heure) {
@@ -135,6 +157,12 @@ var retirerCreneauEvenement = function(id,date,heure) {
 	return evt.listeCreneaux;
 }
 
+var cloturerEvenement = function(id){
+	var evt = rechercheEvt(id);
+	evt.cloturerEvt();
+	return evt.creneauFinal;
+}
+
 var supprimerEvenement = function(id) {
 	for (i=0; i<listeEvt.length;i++) {
 		if (listeEvt[i].id == id) {
@@ -145,23 +173,15 @@ var supprimerEvenement = function(id) {
 }
 
 var repondreCreneauEvenementOui = function (id,date,heure) {
-	var evt = rechercheEvt(id);
-	for (i=0; i<evt.listeCreneaux.length;i++) {
-			if ((evt.listeCreneaux[i].date == date) && (evt.listeCreneaux[i].heure == heure)) {
-				evt.listeCreneaux[i].repondreCreneauOui();
-			}
-		}
-	return evt.listeCreneaux.listeReponses;
+	var creneau = rechercheCreneau(id,date,heure);
+	creneau.repondreCreneauOui();
+	return creneau.listeReponses;
 }
 
 var repondreCreneauEvenementNon = function (id,date,heure) {
-	var evt = rechercheEvt(id);
-	for (i=0; i<evt.listeCreneaux.length;i++) {
-			if ((evt.listeCreneaux[i].date == date) && (evt.listeCreneaux[i].heure == heure)) {
-				evt.listeCreneaux[i].repondreCreneauNon();
-			}
-		}
-	return evt.listeCreneaux.listeReponses;
+	var creneau = rechercheCreneau(id,date,heure);
+	creneau.repondreCreneauNon();
+	return creneau.listeReponses;
 }
 
 //affiche la totalité des évènements
@@ -189,8 +209,13 @@ var rechercheProfil = function(login){
 	}
 }
 
-var rechercheReponseCreneau = function(login,listeR){
-
+var rechercheCreneau = function(id,date,heure){
+	var evt = rechercheEvt(id);
+	for(i=0;i<evt.listeCreneaux.length;i++){
+		if(evt.listeCreneaux[i].date == date && evt.listeCreneaux[i].heure == heure){
+			return evt.listeCreneaux[i];
+		}
+	}
 }
 
 // les 2 fonctions exportées
@@ -207,3 +232,5 @@ exports.isConnected = isConnected;
 exports.rechercheProfil = rechercheProfil;
 exports.rechercheEvt = rechercheEvt;
 exports.logOut = logOut;
+exports.cloturerEvenement = cloturerEvenement;
+exports.rechercheCreneau = rechercheCreneau;

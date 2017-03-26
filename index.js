@@ -74,6 +74,14 @@ app.get('/logOut',function(req, res) {
     console.log('vous avez été deconnecté');
 });
 
+app.get('/cloturerEvt/:id',function(req,res){
+    if(doodle.auth != doodle.rechercheEvt(req.params.id).propriétaire){
+      console.log('vous devez être le propriétaire');
+    }else{
+      res.json(doodle.cloturerEvenement(req.params.id));
+    }
+});
+
 app.listen(8080,function(){
 console.log('i hear you');
 });
