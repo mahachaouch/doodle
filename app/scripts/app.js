@@ -18,7 +18,7 @@ var ang = angular
 ang.config(function($stateProvider) {
  var mainState = {
     name: 'main',
-    url: '/',
+    url: '/evt',
         controller: 'MainCtrl',
         controllerAs: 'main',
     templateUrl: 'views/main.html'
@@ -30,15 +30,24 @@ ang.config(function($stateProvider) {
     templateUrl: 'views/saisirposition.html'
     
   }
-  var positionState = {
-    name: 'position',
-    url: '/position/compte/{idcpt}',
-    templateUrl: 'views/position.html'
+  var profilState = {
+    name: 'profil',
+    url: '/profil/{idProfil}',
+    templateUrl: 'views/profil.html'
     
+  }
+  var creerProfilState= {
+      name:'creerProfil',
+      url:'/creerProfil',
+        controller:'CreerProfilCtrl',
+        controllerAs:'creerProfil',
+      templateUrl: 'views/creerProfil.html',
+      
   }
 
   $stateProvider.state(mainState);
   $stateProvider.state(saisirpositionState);
-  $stateProvider.state(positionState);
+  $stateProvider.state(profilState);
+  $stateProvider.state(creerProfilState);
 });
 
