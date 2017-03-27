@@ -91,9 +91,6 @@ angular.module('doodleApp')
      $scope.utilisateur=response.data;
       console.log(response.data);
       
-      
-     
-          $scope.msg=false;
       $scope.identification=false;
       $rootScope.isConnected=true;
       
@@ -133,13 +130,13 @@ angular.module('doodleApp')
 	description:""
     };
     
-  $rootScope.getMyEvt=function(login){
+  $rootScope.getMyEvt=function(){
       
-      $http({method: 'GET', url:'/myevt/login/'+login }).then(function successCallback(response) {
+      $http({method: 'GET', url:'/myevt/login/'+$rootScope.login }).then(function successCallback(response) {
      // code si réussite
       $rootScope.myEvts=response.data;
      
-      console.log(response.data);
+      //console.log(response.data);
      });
      
   };
@@ -150,6 +147,9 @@ $scope.creerEvt= function(titre,desc){
      // code si réussite
       $rootScope.listeEvt=response.data;
       console.log(response.data);
+      
+      //mettre à jour la liste des evts crées par l utilisateur
+      $rootScope.getMyEvt();
      });
      
 };  

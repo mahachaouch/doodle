@@ -31,9 +31,11 @@
     
     
 <div ng-if="identification">
-    <input type="text" value="Login" ng-model="login"><br/>
+    <div class = "input-group">
+      <input type="text" class = "form-control" value="Login" ng-model="login"><br/>
+    </div>
   <!--  <input type="text" value="Nom" ng-model="nom"><br/>-->
-    <button ng-click="connexion(login)"/>Connexion
+    <button class="btn btn-default" ng-click="connexion(login)"/>Connexion
 </div>
     <div ng-if="!isConnected"><h2>Il faut se connecter pour accéder à la liste des evenements</h2></div>
 <div ng-if="isConnected" class="row marketing">
@@ -79,23 +81,33 @@
     
 <div class="row marketing">
   <h4>Création d'évenement</h4>
-<input type="text" ng-model="titre"/><br/>
-<input type="text" ng-model="description"/><br/>
-<input type="button" ng-click="creerEvt(titre,description)" value="Enregistrer"/>
+  <div class = "input-group">
+    <input type="text" class = "form-control" placeholder = "Titre" ng-model="titre"/><br/>
+  </div>
+  <div class = "input-group">
+    <input type="text" class = "form-control" placeholder = "Description" ng-model="description"/><br/>
+  </div>
+<input type="button" class="btn btn-default" ng-click="creerEvt(titre,description)" value="Enregistrer"/>
 </div>
     
   <div class="row marketing">
   <h4>Suppression d'évenement</h4>
-<input type="number" ng-model="idtoDelete"/><br/>
-<button ng-click="supprimerEvt(idtoDelete)" value="Supprimer"/>Supprimer
+    <input type="number" ng-model="idtoDelete"/><br/>
+<button class="btn btn-default" ng-click="supprimerEvt(idtoDelete)" value="Supprimer"/>Supprimer
 </div>
     
   <div class="row marketing">
   <h4>Création de créneau</h4>
-  <input type="number" ng-model="idEvtCreanAdd"/><br/>
-  <input type="text" ng-model="date"/><br/>
-<input type="text" ng-model="heure"/><br/>
-<button  ng-click="creerCrenau(idEvtCreanAdd,date,heure)" />Enregistrer
+  <div class = "input-group">
+    <input type="number" class = "form-control" placeholder = "ID" ng-model="idEvtCreanAdd"/><br/>
+  </div>
+  <div class = "input-group">
+    <input type="text" class = "form-control" placeholder = "Date" ng-model="date"/><br/>
+  </div>
+  <div class = "input-group">
+    <input type="text" class = "form-control" placeholder = "Heure" ng-model="heure"/><br/>
+  </div>
+<button class="btn btn-default" ng-click="creerCrenau(idEvtCreanAdd,date,heure)" />Enregistrer
 </div>
   
 </div>

@@ -1,12 +1,27 @@
 <div ng-app="profil">
    {{myEvts}}
-    <div ng-if="isConnected">
-        <p>Infos </p>
+  
+   <table  ng-if="myEvts.length!==0" class="table table-bordered">
+             <tr>
+          <td>Numéro</td>
+          <td>Titre</td>
+          <td>Description</td>
+         
+      </tr>
+    <tr ng-repeat="module in myEvts">
+        <td>{{module.id}}</td>
+        <td>{{ module.titre }} </td>
+        <td>{{ module.description }} </td>
         
-        {{listeEvt}}
-       Mon login: {{login}}
-       Nom :{{nom}}
-       Prenom: {{prenom}}
+    </tr>
+   </table>
+     
+    <div ng-if="isConnected">
+        <h1>Infos </h1>
+
+       Mon login: {{login}} </br>
+       Nom :{{nom}}         </br>
+       Prenom: {{prenom}}   </br>
     </div>
     <div ng-if="!isConnected">
         <h2>Vous devez vous connecter pour pouvoir consulter votre profil</h2>
