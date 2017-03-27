@@ -21,10 +21,16 @@
 
     
         <div ng-if="open">
-            Login: <input type="text"  ng-model="login"><br/>
-            Nom: <input type="text" ng-model="nom"><br/>
-            Prenom: <input type="text"ng-model="prenom"><br/>
-              <button ng-click="creerProfil(login,nom,prenom)" />Valider<br/>
+            <div class = "input-group">
+                <input type="text" class="form-control" placeholder="Login" ng-model="login"><br/>
+            </div>
+            <div class = "input-group">
+                <input type="text" class="form-control" placeholder="Nom" ng-model="nom"><br/>
+            </div>
+            <div class = "input-group">
+                <input type="text" class="form-control" placeholder="Prenom" ng-model="prenom"><br/>
+            </div>
+              <button class="btn btn-default" ng-click="creerProfil(login,nom,prenom)" />Valider<br/>
         </div>  
     
     
@@ -32,7 +38,7 @@
     
 <div ng-if="identification">
     <div class = "input-group">
-      <input type="text" class = "form-control" value="Login" ng-model="login"><br/>
+      <input type="text" class="form-control" placeholder="Login" ng-model="login"><br/>
     </div>
   <!--  <input type="text" value="Nom" ng-model="nom"><br/>-->
     <button class="btn btn-default" ng-click="connexion(login)"/>Connexion
@@ -82,17 +88,19 @@
 <div class="row marketing">
   <h4>Création d'évenement</h4>
   <div class = "input-group">
-    <input type="text" class = "form-control" placeholder = "Titre" ng-model="titre"/><br/>
+    <input type="text" class="form-control" placeholder="Titre" ng-model="titre"/><br/>
   </div>
   <div class = "input-group">
-    <input type="text" class = "form-control" placeholder = "Description" ng-model="description"/><br/>
+    <input type="text" class="form-control" placeholder="Description" ng-model="description"/><br/>
   </div>
 <input type="button" class="btn btn-default" ng-click="creerEvt(titre,description)" value="Enregistrer"/>
 </div>
     
   <div class="row marketing">
   <h4>Suppression d'évenement</h4>
-    <input type="number" ng-model="idtoDelete"/><br/>
+    <div class = "input-group">
+    <input type="number" class="form-control" placeholder="ID" ng-model="idtoDelete"/><br/>
+    </div>
 <button class="btn btn-default" ng-click="supprimerEvt(idtoDelete)" value="Supprimer"/>Supprimer
 </div>
     

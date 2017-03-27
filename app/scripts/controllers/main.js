@@ -149,7 +149,7 @@ $scope.creerEvt= function(titre,desc){
       console.log(response.data);
       
       //mettre à jour la liste des evts crées par l utilisateur
-      $rootScope.getMyEvt();
+      //$rootScope.getMyEvt();
      });
      
 };  
