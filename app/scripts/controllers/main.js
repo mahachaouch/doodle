@@ -16,6 +16,7 @@ angular.module('doodleApp')
     ];
  
     $rootScope.listeEvt ;
+    $scope.msg=false;
     $scope.id;
     $rootScope.myEvts;
     $scope.login;
@@ -27,7 +28,7 @@ angular.module('doodleApp')
     $scope.list=[];
     $scope.afficherCreanux=false;
     //l id de l evt choisi pour voir ses crénaux
-    $scope.idEvtCreneauAffich=-1;
+    $scope.idEvtCreneauAffich;
     $scope.open=false;
     
     $scope.creer=function(){
@@ -44,8 +45,9 @@ angular.module('doodleApp')
     $rootScope.nom;
     $rootScope.prenom;
     
-        $scope.creerProfil=function(){
-           $http({method: 'POST', url: '/profil/'+$scope.login+'/nom/'+$scope.nom+'/prenom/'+$scope.prenom}).then(function successCallback(response) {
+        $scope.creerProfil=function(login,nom,prenom){
+            console.log(login);
+           $http({method: 'POST', url: '/profil/'+login+'/nom/'+nom+'/prenom/'+prenom}).then(function successCallback(response) {
      // code si réussite
     
       $scope.open=false;
@@ -63,17 +65,35 @@ angular.module('doodleApp')
      });
     };
     
-    $scope.afficherCrean=function(creaux){
+    $scope.afficherCrean=function(creaux,idEvt){
         console.log(creaux);
         $scope.afficherCreanux=true;
         $scope.CreauxAaffich= creaux;
+        $scope.idEvtCreneauAffich=idEvt;
+       
     };
     
+    $scope.participer=function(date,heure){
+        
+        
+                   $http({method: 'GET', url: '/oui/'+$scope.idEvtCreneauAffich+'/date/'+date+'/heure/'+heure}).then(function successCallback(response) {
+     // code si réussite   
+      console.log(response.data);
+     });
+        
+    }; 
+    
+    
     $scope.connexion=function(login){
+       
            $http({method: 'GET', url: '/auth/'+login}).then(function successCallback(response) {
      // code si réussite
      $scope.utilisateur=response.data;
       console.log(response.data);
+      
+      
+     
+          $scope.msg=false;
       $scope.identification=false;
       $rootScope.isConnected=true;
       
@@ -83,7 +103,9 @@ angular.module('doodleApp')
        $rootScope.prenom=$scope.utilisateur.prenom;
       // $scope.getMyEvt($scope.utilisateur.login);
       $scope.getEvts();
+ 
      });
+       
     };
     
     
@@ -157,7 +179,7 @@ $scope.creerEvt= function(titre,desc){
        $http({method: 'POST', url: '/id/'+idEvtCreanAdd+'/date/'+date+'/heure/'+heure}).then(function successCallback(response) {
      // code si réussite
       $scope.crenau=response.data;
-      console.log($rootScope.listeEvt);
+      console.log(response.data);
      });
    };
     

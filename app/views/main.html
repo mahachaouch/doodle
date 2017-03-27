@@ -24,7 +24,7 @@
             Login: <input type="text"  ng-model="login"><br/>
             Nom: <input type="text" ng-model="nom"><br/>
             Prenom: <input type="text"ng-model="prenom"><br/>
-              <button ng-click="creerProfil()" />Valider<br/>
+              <button ng-click="creerProfil(login,nom,prenom)" />Valider<br/>
         </div>  
     
     
@@ -32,7 +32,7 @@
     
 <div ng-if="identification">
     <input type="text" value="Login" ng-model="login"><br/>
-    <input type="text" value="Nom" ng-model="nom"><br/>
+  <!--  <input type="text" value="Nom" ng-model="nom"><br/>-->
     <button ng-click="connexion(login)"/>Connexion
 </div>
     <div ng-if="!isConnected"><h2>Il faut se connecter pour accéder à la liste des evenements</h2></div>
@@ -42,7 +42,7 @@
         <h4>Liste des évenements</h4>
 
 
-  <table class="table table-bordered" >
+  <table ng-if="listeEvt.length!=0" class="table table-bordered" >
       <tr>
           <td>Numéro</td>
           <td>Titre</td>
@@ -53,7 +53,7 @@
         <td>{{module.id}}</td>
         <td>{{ module.titre }} </td>
         <td>{{ module.description }} </td>
-        <td><button ng-click="afficherCrean(module.listeCreneaux)"/>Crenaux</td>
+        <td><button ng-click="afficherCrean(module.listeCreneaux,module.id)"/>Crenaux</td>
     </tr>
 </table> 
     </div> 
@@ -64,10 +64,12 @@
       <tr>
           <td>Date</td>
            <td>Heure</td>
+           <td>Participation</td>
       </tr>
       <tr ng-repeat="cr in CreauxAaffich" >
           <td>{{cr.date}}</td> 
           <td>{{cr.heure}}</td>
+          <td><button ng-click="participer(cr.date,cr.heure)"/>Participer</td>
       </tr>
   </table>
   
