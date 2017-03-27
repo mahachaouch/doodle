@@ -111,6 +111,7 @@ var creerProfil = function(login, nom, prenom) {
 }
 
 var connexion = function (login) {
+	var temp;
 	for (i=0; i<listeProfil.length;i++){
 		if (listeProfil[i].login == login){
 			listeProfil[i].connecte = true;
